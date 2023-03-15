@@ -15,14 +15,7 @@ export default defineConfig({
   mode,
   publicDir: "../public",
   build: {
-    outDir: "../dir",
-    assetsDir: "./",
-    lib: {
-      entry: 'src/ts/my-element.ts',
-      formats: ['es'],
-    },
-    rollupOptions: {
-      external: /^lit/,
-    },
+    outDir: "../dist",
+    assetsDir: "./"
   },
 })
