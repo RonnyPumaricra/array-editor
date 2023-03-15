@@ -1,11 +1,11 @@
 import { defineConfig } from 'vite'
 
-const isGHpages = false
+const isGHpages = true
 const mode = process.env.NODE_ENV === "production" ?
   "production" :
   "development"
 const base = mode === "production" && isGHpages ?
-  "array-editor/" :
+  "/array-editor/" :
   "/"
 
 // https://vitejs.dev/config/
