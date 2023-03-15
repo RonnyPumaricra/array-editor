@@ -43,7 +43,7 @@ class ArrayEditor extends LitElement {
     return renderableArray;
   }
 
-  addFieldAt = (pos: number) => (ev: CustomEvent) => {
+  addFieldAt = (pos: number) => () => {
     console.log("Adding field at ", pos);
     const nextArray = [...this.arrayState];
     nextArray.splice(pos, 0, "");
@@ -58,7 +58,7 @@ class ArrayEditor extends LitElement {
     let addBtnCounter = 0;
 
     return html`
-      ${renderableArray.map((elem, index) =>
+      ${renderableArray.map((elem) =>
         typeof elem !== "number"
           ? html`
               <array-input

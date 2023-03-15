@@ -10,18 +10,19 @@ import { customElement, property } from "lit/decorators.js";
 @customElement("app-wrapper")
 export class AppWrapper extends LitElement {
   @property({ state: true })
-  JoinedValue;
+  JoinedValue = "";
 
-  handleChange(ev: CustomEvent): void {
-    console.log("Changed!");
-  }
+  // handleChange(ev: CustomEvent): void {
+  //   console.log("Changed!");
+  // }
 
   render(): HTMLTemplateResult {
     return html`
       <h1>Edit an array, insert elements and join the final result!</h1>
-      <array-editor @arrayChange=${this.handleChange}></array-editor>
+      <array-editor></array-editor>
       <p>Click below to join the array</p>
     `;
+    // <array-editor @arrayChange=${this.handleChange}></array-editor>
   }
 
   static styles: CSSResultGroup = css`

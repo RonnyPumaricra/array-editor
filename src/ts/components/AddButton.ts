@@ -5,11 +5,11 @@ import {
   type CSSResultGroup,
   type HTMLTemplateResult,
 } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { customElement } from "lit/decorators.js";
 
 @customElement("add-button")
 class AddButton extends LitElement {
-  handleClick(ev: MouseEvent): void {
+  handleClick(): void {
     this.dispatchEvent(new CustomEvent("add"));
   }
 

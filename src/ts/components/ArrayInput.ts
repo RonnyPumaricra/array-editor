@@ -10,10 +10,12 @@ import { customElement, property } from "lit/decorators.js";
 @customElement("array-input")
 class ArrayInput extends LitElement {
   @property({ attribute: true })
-  value;
+  value = "";
 
-  handleInput(ev: InputEvent): void {
-    const text: string = ev.target.textContent;
+  handleInput({ target }: InputEvent): void {
+    const newText = (target as HTMLDivElement).textContent;
+    if (newText === null) return;
+    const text: string = newText;
     console.log(text);
     this.dispatchEvent(
       new CustomEvent("inputChange", {
