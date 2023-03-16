@@ -13,8 +13,8 @@ class ArrayEditor extends LitElement {
   @property({ state: true, type: Array })
   arrayState: string[] = ["A", "B", "C"];
 
-  @property({ attribute: true, reflect: true })
-  joinedArray = "";
+  // @property({ attribute: true, reflect: true })
+  // joinedArray = "";
 
   setValueOf = (index: number) => (ev: CustomEvent) => {
     const copyState = [...this.arrayState];
@@ -26,7 +26,6 @@ class ArrayEditor extends LitElement {
     copyState[index] = ev.detail;
 
     this.arrayState = copyState;
-    this.joinedArray = copyState.join();
   };
 
   getRenderableArray(): Array<number | string> {
@@ -48,7 +47,13 @@ class ArrayEditor extends LitElement {
     const nextArray = [...this.arrayState];
     nextArray.splice(pos, 0, "");
     this.arrayState = nextArray;
-    this.joinedArray = nextArray.join();
+  };
+
+  removeFieldAt = (pos: number) => () => {
+    console.log("Removing field at", pos);
+    const nextArray = [...this.arrayState];
+    nextArray.splice(pos, 1);
+    this.arrayState = nextArray;
   };
 
   render(): HTMLTemplateResult {
@@ -62,7 +67,8 @@ class ArrayEditor extends LitElement {
         typeof elem !== "number"
           ? html`
               <array-input
-                @inputChange=${this.setValueOf(inputCounter++)}
+                @inputChange=${this.setValueOf(inputCounter)}
+                @removeField=${this.removeFieldAt(inputCounter++)}
                 value=${elem}
               ></array-input>
             `

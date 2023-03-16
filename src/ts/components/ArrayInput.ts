@@ -24,14 +24,22 @@ class ArrayInput extends LitElement {
     );
   }
 
+  handleRemove(): void {
+    this.dispatchEvent(new CustomEvent("removeField", {}));
+  }
+
   render(): HTMLTemplateResult {
     return html`
       <div
+        class="input"
         contenteditable="true"
         tabindex="1"
         @blur=${this.handleInput}
         .textContent=${this.value}
       ></div>
+      <div class="remove-btn" @click=${this.handleRemove}>
+        <div class="less-sign"></div>
+      </div>
     `;
   }
 
@@ -50,8 +58,9 @@ class ArrayInput extends LitElement {
       padding: 16px;
       display: grid;
       place-items: center;
+      position: relative;
     }
-    div {
+    .input {
       box-sizing: border-box;
       display: block;
       width: 100%;
@@ -64,12 +73,39 @@ class ArrayInput extends LitElement {
       white-space: nowrap;
       z-index: 1;
     }
-    div:focus {
+    .input:focus {
       overflow: visible;
       background-color: var(--bg-active);
     }
-    div:not(:focus) {
+    .input:not(:focus) {
       text-overflow: ellipsis;
+    }
+
+    /* Remove Button */
+    .remove-btn {
+      position: absolute;
+      inset: 1rem;
+      top: auto;
+      bottom: -1rem;
+      height: 5rem;
+      width: 5rem;
+      margin: auto;
+      background: var(--translucid-txt);
+      border-radius: 4px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      /* Transition */
+      opacity: 0;
+      transition: opacity 200ms;
+    }
+    .less-sign {
+      height: 0.5rem;
+      width: 2.25rem;
+      background: var(--primary);
+    }
+    .remove-btn:hover {
+      opacity: 1;
     }
   `;
 }
