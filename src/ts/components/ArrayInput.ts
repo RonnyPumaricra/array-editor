@@ -16,7 +16,7 @@ class ArrayInput extends LitElement {
     const newText = (target as HTMLDivElement).textContent;
     if (newText === null) return;
     const text: string = newText;
-    console.log(text);
+    // console.log(text);
     this.dispatchEvent(
       new CustomEvent("inputChange", {
         detail: text,
@@ -71,11 +71,12 @@ class ArrayInput extends LitElement {
       /* Text Overflow */
       overflow: hidden;
       white-space: nowrap;
-      z-index: 1;
+      isolation: isolate;
     }
     .input:focus {
       overflow: visible;
       background-color: var(--bg-active);
+      z-index: 1;
     }
     .input:not(:focus) {
       text-overflow: ellipsis;

@@ -15,17 +15,26 @@ class ArrayEditor extends LitElement {
 
   // @property({ attribute: true, reflect: true })
   // joinedArray = "";
+  bubbleArrayUpdate(newValue: string[]): void {
+    // console.log("Bubbling update...");
+    this.dispatchEvent(
+      new CustomEvent("arrayUpdate", {
+        detail: newValue,
+      })
+    );
+  }
 
   setValueOf = (index: number) => (ev: CustomEvent) => {
-    const copyState = [...this.arrayState];
-    if (!(index in copyState)) {
+    const nextArray = [...this.arrayState];
+    if (!(index in nextArray)) {
       throw new Error(
-        `Didn't find index:${index} in Array:[${copyState.join()}]`
+        `Didn't find index:${index} in Array:[${nextArray.join()}]`
       );
     }
-    copyState[index] = ev.detail;
+    nextArray[index] = ev.detail;
 
-    this.arrayState = copyState;
+    this.arrayState = nextArray;
+    // this.bubbleArrayUpdate(nextArray);
   };
 
   getRenderableArray(): Array<number | string> {
@@ -43,21 +52,24 @@ class ArrayEditor extends LitElement {
   }
 
   addFieldAt = (pos: number) => () => {
-    console.log("Adding field at ", pos);
+    // console.log("Adding field at ", pos);
     const nextArray = [...this.arrayState];
     nextArray.splice(pos, 0, "");
     this.arrayState = nextArray;
+    // this.bubbleArrayUpdate(nextArray);
   };
 
   removeFieldAt = (pos: number) => () => {
-    console.log("Removing field at", pos);
+    // console.log("Removing field at", pos);
     const nextArray = [...this.arrayState];
     nextArray.splice(pos, 1);
     this.arrayState = nextArray;
+    // this.bubbleArrayUpdate(nextArray);
   };
 
   render(): HTMLTemplateResult {
-    console.log("Redrawing...");
+    // console.log("Redrawing...");
+    this.bubbleArrayUpdate(this.arrayState);
     const renderableArray = this.getRenderableArray();
     let inputCounter = 0;
     let addBtnCounter = 0;

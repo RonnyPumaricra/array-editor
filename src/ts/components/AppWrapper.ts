@@ -10,17 +10,19 @@ import { customElement, property } from "lit/decorators.js";
 @customElement("app-wrapper")
 export class AppWrapper extends LitElement {
   @property({ state: true })
-  JoinedValue = "";
+  currentValue = "";
 
-  // handleChange(ev: CustomEvent): void {
-  //   console.log("Changed!");
-  // }
+  handleReactiveUpdate(ev: CustomEvent): void {
+    this.currentValue = (ev.detail as string[]).join(", ");
+  }
 
   render(): HTMLTemplateResult {
     return html`
-      <h1>Edit an array, insert elements and join the final result!</h1>
-      <array-editor></array-editor>
-      <p>Click below to join the array</p>
+      <h1>
+        Edit an array, insert & remove elements and join the final result!
+      </h1>
+      <array-editor @arrayUpdate=${this.handleReactiveUpdate}></array-editor>
+      <div class="result" .textContent=${this.currentValue}></div>
     `;
     // <array-editor @arrayChange=${this.handleChange}></array-editor>
   }
@@ -31,6 +33,10 @@ export class AppWrapper extends LitElement {
     }
     h1 {
       text-align: center;
+    }
+    .result {
+      text-align: center;
+      font-size: 2rem;
     }
   `;
 }
